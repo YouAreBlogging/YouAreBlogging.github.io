@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are Blogging - Link Generator & Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #2d3748;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/><circle cx="25" cy="25" r="0.5" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="0.8" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: 800;
+        }
+        .section-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            border-left: 4px solid #667eea;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        .wobble-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 20px 40px; /* Larger padding */
+            border-radius: 30px; /* More rounded */
+            font-size: 24px; /* Larger font */
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px; /* More margin */
+            display: inline-block; /* To allow transform */
+            text-decoration: none; /* For anchor tags */
+            animation: wobble 2s infinite ease-in-out; /* Wobble animation */
+        }
+        .wobble-btn:hover {
+            transform: scale(1.05) rotate(1deg); /* Slight scale and rotation on hover */
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            animation-play-state: paused; /* Pause wobble on hover */
+        }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg); }
+            15% { transform: rotate(-1deg); }
+            30% { transform: rotate(1deg); }
+            45% { transform: rotate(-1deg); }
+            60% { transform: rotate(1deg); }
+            75% { transform: rotate(-1deg); }
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .link-display {
+            background-color: #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #2d3748;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .copy-btn {
+            background: #4a5568;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            transition: background-color 0.3s ease;
+        }
+        .copy-btn:hover {
+            background: #2d3748;
+        }
+        .info-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .info-list li::before {
+            content: '👉';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+        .footer {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 80px;
+            border-top-left-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+        .footer p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        .message-box {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .message-box.error {
+            background-color: #f44336;
+        }
+        details > summary {
+            list-style: none; /* Remove default marker */
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+        }
+        details > summary::-webkit-details-marker {
+            display: none; /* Hide marker for webkit */
+        }
+        details > summary:hover {
+            color: #764ba2;
+        }
+        details[open] > summary {
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .link-display {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .copy-btn {
+                margin-top: 10px;
+                width: 100%;
+            }
+            .wobble-btn {
+                padding: 15px 30px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>You Are Blogging</h1>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-5 md:p-10">
+        <!-- Blog Home Page Button -->
+        <div class="section-card text-center">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">🚀 Go to Your Blog!</h2>
+            <p class="mb-6 text-gray-700">Click the button below to visit your main blog page.</p>
+            <a href="blog.html" class="wobble-btn">Visit Blog Home</a>
+        </div>
+
+        <!-- Link Generator Section -->
+        <div class="section-card">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">🔗 Blog Link Generator</h2>
+            <p class="mb-6 text-gray-700">Generate a direct link to your blog by entering your GitHub username and repository name.</p>
+            <div class="form-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="generatorGithubUser" class="block text-gray-700 text-sm font-semibold mb-2">GitHub Username:</label>
+                    <input type="text" id="generatorGithubUser" placeholder="YourUsername" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="generatorGithubRepo" class="block text-gray-700 text-sm font-semibold mb-2">Repository Name:</label>
+                    <input type="text" id="generatorGithubRepo" placeholder="my-blog" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <button class="wobble-btn" onclick="generateLink()">Generate Link</button>
+            
+            <div id="generatedLinkContainer" class="link-display hidden">
+                <span id="generatedLinkText"></span>
+                <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+            </div>
+            <div id="linkGeneratorMessage" class="mt-4 text-sm text-red-500"></div>
+        </div>
+
+        <!-- Collapsible GitHub API Token Guide Section -->
+        <details class="section-card">
+            <summary class="text-2xl font-bold text-gray-800">🔑 GitHub API Token Guide</summary>
+            <p class="mt-4 mb-6 text-gray-700">For certain advanced features (e.g., managing blog posts via an admin interface), you might need a GitHub Personal Access Token (PAT). Here's how to get one:</p>
+            <ol class="list-decimal list-inside info-list text-gray-700">
+                <li>Log in to your GitHub account.</li>
+                <li>Click your profile picture in the top right corner and select "Settings".</li>
+                <li>In the left sidebar, choose "Developer settings".</li>
+                <li>Click on "Personal access tokens" and then "Tokens (classic)".</li>
+                <li>Click "Generate new token" and select "Generate new token (classic)".</li>
+                <li>Give your token a descriptive note (e.g., "You Are Blogging Admin").</li>
+                <li>Select the necessary scopes (permissions). For repository content access, you'll need at least `repo` (for private repositories) or `public_repo` (for public repositories). For content management, `workflow` is often useful.</li>
+                <li>Click "Generate token".</li>
+                <li>Copy the generated token IMMEDIATELY. You won't be able to see it again later!</li>
+            </ol>
+            <p class="mt-6 text-gray-700">For more detailed information, refer to the official GitHub documentation:</p>
+            <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank" class="text-blue-600 hover:underline">GitHub Personal Access Tokens Documentation</a>
+        </details>
+
+        <!-- Collapsible Admin Area Link Section -->
+        <details class="section-card">
+            <summary class="text-2xl font-bold text-gray-800">⚙️ Admin Area</summary>
+            <p class="mt-4 mb-6 text-gray-700">This is where you could later add, edit, or delete your blog posts. (This page is not yet implemented.)</p>
+            <a href="admin.html" class="text-blue-600 hover:underline font-medium">Go to Admin Area (admin.html)</a>
+        </details>
+    </div>
+
+    <div id="messageBox" class="message-box"></div>
+
+    <footer class="footer">
+        <p>&copy; 2025 You Are Blogging. Created with ❤️ and modern web technologies.</p>
+    </footer>
+
+    <script>
+        // Function to display a temporary message
+        function showMessage(message, isError = false) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.className = 'message-box'; // Reset classes
+            if (isError) {
+                messageBox.classList.add('error');
+            }
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 3000); // Hide after 3 seconds
+        }
+
+        // Function to generate the blog link
+        function generateLink() {
+            const user = document.getElementById('generatorGithubUser').value.trim();
+            const repo = document.getElementById('generatorGithubRepo').value.trim();
+            const generatedLinkContainer = document.getElementById('generatedLinkContainer');
+            const generatedLinkText = document.getElementById('generatedLinkText');
+            const messageDiv = document.getElementById('linkGeneratorMessage');
+
+            messageDiv.textContent = ''; // Clear previous messages
+
+            if (!user || !repo) {
+                messageDiv.textContent = 'Please enter both GitHub username and repository name.';
+                generatedLinkContainer.classList.add('hidden');
+                return;
+            }
+
+            // Fixed base URL for YouAreBlogging.github.io
+            const fullUrl = `https://YouAreBlogging.github.io/blog.html?name-repo=${user}/${repo}`;
+            
+            generatedLinkText.textContent = fullUrl;
+            generatedLinkContainer.classList.remove('hidden');
+            showMessage('Link successfully generated!');
+        }
+
+        // Function to copy the generated link to clipboard
+        function copyLink() {
+            const linkText = document.getElementById('generatedLinkText').textContent;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = linkText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy'); // Fallback for older browsers
+            document.body.removeChild(tempInput);
+            showMessage('Link copied to clipboard!');
+        }
+    </script>
+</body>
+</html>
